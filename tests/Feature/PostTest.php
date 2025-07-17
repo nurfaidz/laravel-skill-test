@@ -16,15 +16,15 @@ class PostTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->app->make(Gate::class)
-            ->policy(Post::class, \App\Policies\PostPolicy::class);
+        //        $this->app->make(Gate::class)
+        //            ->policy(Post::class, \App\Policies\PostPolicy::class);
     }
 
     public function test_lists_posts()
     {
         $user = User::factory()->create();
 
-        Post::factory()->count(2)->create([
+        $post = Post::factory()->count(2)->create([
             'user_id' => $user->id,
             'is_draft' => false,
             'published_at' => now()->subHour(),
@@ -42,9 +42,10 @@ class PostTest extends TestCase
             'published_at' => now()->addHour(),
         ]);
 
-        $response = $this->getJson('/posts');
+        $response = $this->get('/posts');
         $response->assertOk()
             ->assertJsonCount(2, 'data');
+
     }
 
     public function test_create_post_requires_authentication()

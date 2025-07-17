@@ -19,3 +19,6 @@ require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'verified'])->resource('posts', PostController::class)->except(['index', 'show']);
 Route::resource('posts', PostController::class)->only(['index', 'show']);
+
+Route::resource('reimburses', \App\Http\Controllers\ReimburseController::class)
+    ->middleware(['auth', 'verified']);

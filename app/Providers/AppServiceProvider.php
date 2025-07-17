@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Registering Policies
-        Gate::policy(Post::class, PostPolicy::class);
+        //        Gate::policy(Post::class, PostPolicy::class);
+        Gate::guessPolicyNamesUsing(function (string $modelClass) {
+            return 'App\\Policies\\'.class_basename($modelClass).'Policy';
+        });
     }
 }

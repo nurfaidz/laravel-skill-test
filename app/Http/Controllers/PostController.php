@@ -33,7 +33,9 @@ class PostController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return new PostResource($post);
+        //        return new PostResource($post);
+        //        The Basic, Aunthentication Authorization Security, ELoquent ORM Started , Relationship
+        //    Documentation,
     }
 
     /**
@@ -41,7 +43,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        if ($post->is_draft || ($post->published_at && $post->published_at > now())) {
+        //        if ($post->is_draft || ($post->published_at ==! 0 && $post->published_at > now())) {
+        if ($post->is_draft || ! $post->published_at || $post->published_at > now()) {
             abort(404);
         }
 
